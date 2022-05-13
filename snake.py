@@ -13,6 +13,16 @@ class Snake:
         self.head= self.all_snake[0]
         self.tail = self.all_snake[-1]
 
+    def refresh(self):
+
+        for position in self.all_snake:
+            position.goto(1500,1500)
+        # self.all_snake.clear()
+        self.all_snake = []
+        self.create_snake()
+        self.head= self.all_snake[0]
+
+
     def create_snake(self):
         for position in STARTING_POSITIONS:
             self.add_snake(position)

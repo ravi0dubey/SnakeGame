@@ -12,19 +12,42 @@ class Scoreboard(Turtle):
         self.points = POINTS
         self.penup()
         self.ht()
+        self.path = "/users/ravi0dubey/OneDrive/desktop"
+        # self.path = "../../OneDrive/Desktop"
+        with open(f"{self.path}/score.txt") as rfile:
+            self.high_score = int(rfile.read())
         self.color("white")
         self.goto(CORD1, CORD2)
-        self.refresh()
+        self.update_score()
 
-    def refresh(self):
-        self.write(f"Score : {self.points}",  align = ALIGNMENT, font= FONT)
+    def update_score(self):
+        self.write(f"Score : {self.points}, High_score : {self.high_score}",  align = ALIGNMENT, font= FONT)
 
+    def refresh_score(self):
+        self.goto(CORD1, CORD2)
+        self.clear()
+        with open(f"{self.path}/score.txt") as rfile:
+            self.high_score = int(rfile.read())
+            print(f"open {self.high_score}")
+        if self.points > self.high_score:
+            self.high_score= self.points
+            print(f"self.points > {self.points}")
+            with open("score.txt",mode= "w") as wfile:
+                print(f"update.points {self.high_score}")
+                wfile.write(f"{self.high_score}")
+
+        self.points = 0
+        self.update_score()
 
     def add_points(self):
         self.clear()
         self.points += INCR
-        self.refresh()
+        self.update_score()
 
     def game_over(self):
         self.goto(CORD1, CORD1)
         self.write("Game Over",  align = ALIGNMENT, font= FONT)
+
+    def new_game(self):
+        self.goto(-200, -200)
+        self.write("New Game",  align = ALIGNMENT, font= FONT)
